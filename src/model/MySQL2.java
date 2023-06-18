@@ -5,10 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class MySQL {
 
+public class MySQL2 {
     private static Connection connection;
-
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -17,24 +16,29 @@ public class MySQL {
             e.printStackTrace();
         }
     }
-
-    public static ResultSet execute(String query) {
+    public static ResultSet executeSearch(String query){
         try {
-
+            
             Statement statement = connection.createStatement();
-
-            if (query.startsWith("SELECT")) {
-                ResultSet resultSet = statement.executeQuery(query);
-                return resultSet;
-            } else {
-                int result = statement.executeUpdate(query);
-                return null;
-            }
-
+            ResultSet resultSet = statement.executeQuery(query);
+            return resultSet;
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-
+    
+    public static Integer executeIUD(String query){
+        try {
+            
+            Statement statement = connection.createStatement();
+            int result = statement.executeUpdate(query);
+            return result;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
