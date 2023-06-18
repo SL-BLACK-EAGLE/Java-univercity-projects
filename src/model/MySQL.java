@@ -18,18 +18,15 @@ public class MySQL {
         }
     }
 
-    public static ResultSet execute(String query) throws Exception{
+    public static ResultSet execute(String query) throws Exception {
 
         Statement statement = connection.createStatement();
 
         if (query.startsWith("SELECT")) {
-            ResultSet resultSet = statement.executeQuery(query);
-            return resultSet;
+            return statement.executeQuery(query);
         } else {
-            int result = statement.executeUpdate(query);
+            statement.executeUpdate(query);
             return null;
         }
-
     }
-
 }
