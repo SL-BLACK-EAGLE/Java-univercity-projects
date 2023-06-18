@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class MySQL2 {
     private static Connection connection;
-    static {
+    public static void createConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db05", "root", "Chathuhansika@2017");
@@ -18,7 +18,7 @@ public class MySQL2 {
     }
     public static ResultSet executeSearch(String query){
         try {
-            
+            createConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             return resultSet;
@@ -31,7 +31,7 @@ public class MySQL2 {
     
     public static Integer executeIUD(String query){
         try {
-            
+            createConnection();
             Statement statement = connection.createStatement();
             int result = statement.executeUpdate(query);
             return result;
