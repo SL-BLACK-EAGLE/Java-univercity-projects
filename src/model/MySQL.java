@@ -1,4 +1,5 @@
 package model;
+
 import java.util.Properties;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,37 +13,27 @@ public class MySQL {
 
     static {
         try {
-            
+
             Properties properties = new Properties();
             properties.load(MySQL.class.getResourceAsStream(propertyFile));
             String database = properties.getProperty("database");
             String password = properties.getProperty("password");
             String username = properties.getProperty("username");
-            
+
             Class.forName("com.mysql.cj.jdbc.Driver");
-             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, username, password);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, username, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static ResultSet execute(String query) {
-        try {
+    public static ResultSet execute(String query) throws Exception {
+        Statement statement = connection.createStatement();
 
-            
-
-            Statement statement = connection.createStatement();
-
-            if (query.startsWith("SELECT")) {
-                ResultSet resultSet = statement.executeQuery(query);
-                return resultSet;
-            } else {
-                int result = statement.executeUpdate(query);
-                return null;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (query.startsWith("SELECT")) {
+            return statement.executeQuery(query);
+        } else {
+            statement.executeUpdate(query);
             return null;
         }
     }
